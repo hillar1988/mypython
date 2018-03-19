@@ -1,0 +1,23 @@
+missing module named resource - imported by posix, E:\Github\mypython\myui-come.py
+missing module named posix - imported by os, E:\Github\mypython\myui-come.py
+missing module named _posixsubprocess - imported by subprocess, E:\Github\mypython\myui-come.py
+missing module named ce - imported by os, E:\Github\mypython\myui-come.py
+missing module named clr - imported by pyreadline.clipboard.ironpython_clipboard, pyreadline.console.ironpython_console, E:\Github\mypython\myui-come.py
+missing module named IronPythonConsole - imported by pyreadline.console.ironpython_console, E:\Github\mypython\myui-come.py
+missing module named StringIO - imported by pyreadline.py3k_compat, E:\Github\mypython\myui-come.py
+missing module named org - imported by pickle, E:\Github\mypython\myui-come.py
+missing module named System - imported by pyreadline.clipboard.ironpython_clipboard, pyreadline.keysyms.ironpython_keysyms, pyreadline.console.ironpython_console, pyreadline.rlmain, E:\Github\mypython\myui-come.py
+missing module named sets - imported by pyreadline.keysyms.common, E:\Github\mypython\myui-come.py
+missing module named startup - imported by pyreadline.keysyms.common, pyreadline.keysyms.keysyms, E:\Github\mypython\myui-come.py
+missing module named console - imported by pyreadline.console.ansi, E:\Github\mypython\myui-come.py
+excluded module named _frozen_importlib - imported by importlib, E:\Github\mypython\myui-come.py
+missing module named _winreg - imported by platform, E:\Github\mypython\myui-come.py
+missing module named _scproxy - imported by urllib.request
+missing module named java - imported by platform, E:\Github\mypython\myui-come.py
+missing module named 'java.lang' - imported by platform, E:\Github\mypython\myui-come.py, xml.sax._exceptions
+missing module named vms_lib - imported by platform, E:\Github\mypython\myui-come.py
+missing module named termios - imported by tty, E:\Github\mypython\myui-come.py, getpass
+missing module named _dummy_threading - imported by dummy_threading, E:\Github\mypython\myui-come.py
+missing module named grp - imported by tarfile, shutil, E:\Github\mypython\myui-come.py
+missing module named 'org.python' - imported by copy, E:\Github\mypython\myui-come.py, xml.sax
+missing module named pwd - imported by posixpath, tarfile, shutil, http.server, webbrowser, E:\Github\mypython\myui-come.py, getpass
