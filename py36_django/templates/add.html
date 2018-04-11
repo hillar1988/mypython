@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{#1.后端传递参数c，语法{{c}}#}
+{#<h1>{{c}}</h1>#}
+
+{#2.传递列表数据进来语法{%  %}，元素用{{i}}#}
+{#<h3>教程列表是：</h3>#}
+{#{% for Tour in TutorialList %}#}
+{#{{ Tour }}#}
+{#{% endfor %}#}
+
+{#传递字典进来#}
+{#网址：{{ dict.site}}   内容：{{ dict.content }}#}
+{#遍历字典#}
+{#{% for key, value in dict.items %}#}
+{#    {{ key }}: {{ value }}#}
+{#{% endfor %}#}
+<button class="btn btn-success">这是一个按钮</button>
+<table class="table table-bordered">
+    {% for i in a %}
+    <tr>
+        {% for j in i %}
+        <td>{{j}}</td>
+        {% endfor %}
+    </tr>
+   {% endfor %}
+    <img src="static/img/123.png"  alt="ni">
+</table>
+
+{#引入静态文件#}
+<link rel="stylesheet" href="static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<script src="static/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+<script src="static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</body>
+<script>
+    var a=1;
+    document.write(a);
+</script>
+</html>
