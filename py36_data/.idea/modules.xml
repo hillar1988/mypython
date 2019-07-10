@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../mypython36/.idea/mypython36.iml" filepath="$PROJECT_DIR$/../mypython36/.idea/mypython36.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/py36_data.iml" filepath="$PROJECT_DIR$/.idea/py36_data.iml" />
     </modules>
   </component>
