@@ -64,14 +64,13 @@ class Submit(object):
     def mac(self, value):
         self.__mac = value
 
-    @property
-    def secretKey(self):
-        return self.__secretKey
-
-    @secretKey.setter
-    def secretKey(self, value):
-        self.__secretKey = value
-
+    # @property
+    # def secretKey(self):
+    #     return self.__secretKey
+    #
+    # @secretKey.setter
+    # def secretKey(self, value):
+    #     self.__secretKey = value
 
 
 

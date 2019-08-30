@@ -1,37 +1,58 @@
 from Info import Submit
-import hashlib, json, base64, requests
+import hashlib
+import json
+import base64
+import requests
 
 def Post():
+    #list = ['15168557200', '15867557512', '18267432205', '15990572628']
+    list = ['15168557200']
+    t = ','.join(list)
     submit = Submit()
-    submit.ecName = ('政企分公司测试')
-    submit.apId = 'demo0'
-    submit.secretKey = '123qwe'
-    submit.mobiles = '13800138000'
-    submit.content = '移动改变生活。'
-    submit.sign = 'DWItALe3A'
-    submit.addSerial = ''
+    submit.ecName = "宁波奉化农村商业银行股份有限公司"
+    submit.apId = "http"
+    #submit.secretKey = "fhxyls62"
+    #submit.mobiles = "15168557200,15867557512,18267432205,15990572628"
+    submit.mobiles = t
+    submit.content = "测试"
+    submit.sign = "WbsLve34q"
+    submit.addSerial = ""
     # 字符串拼接
-    stringBuffer = submit.ecName + submit.apId + submit.secretKey + submit.mobiles + submit.content + submit.sign + submit.addSerial
+    stringBuffer = submit.ecName + submit.apId + "fhxyls62" + \
+        submit.mobiles + submit.content + submit.sign + submit.addSerial
+    #print(stringBuffer)
     assert isinstance(stringBuffer, str)
-    ###MD5加密
+    # MD5加密
+    #result=hashlib.md5(stringBuffer.encode())
     result = hashlib.md5(stringBuffer.encode(encoding='utf-8')).hexdigest()
     # 加入mac字段的值
     submit.mac = result
     # 转换成json格式
     param = json.dumps(submit.__dict__).replace('_Submit__', '')
-    # print(param)
     # base64加密
     r = base64.b64encode(param.encode(encoding='utf-8'))
     # 去除头尾
     data_post = str(r, 'utf-8')
-    # print(re)
     '''POST方式发送数据'''
-    url = 'http://112.35.1.155:1992/sms/norsubmit'
-    # data_json = json.dumps({'key1':'value1','key2':'value2'})   #dumps：将python对象解码为json数据
-    response = requests.post(url, data_post)
-    # print(response)
-    print(response.text)
-    # print(response.content)
+    # url = 'http://112.35.1.155:1992/sms/norsubmit'
+    # response = requests.post(url, data_post)
+    ##测试
+    url="http://154.24.35.201:9080/index.aspx"
+    s={"errorCode":"DELIVRD","mobile":"15168557200","msgGroup":"0826112130001000330441","receiveDate":"20190826112100","reportStatus":"CM:0000","submitDate":"20190826112100"}
+    ss= json.dumps(s)
+    print(ss)
+    response = requests.post(url, ss)
+    ##测试
 
-if  __name__=='__main__':
+    #print(response)
+    print(response.text)
+    #print(response.content)
+
+if __name__ == '__main__':
+ for i in range(1,10001):
     Post()
+
+
+
+
+
