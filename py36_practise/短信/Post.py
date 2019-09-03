@@ -23,7 +23,6 @@ def Post():
     #print(stringBuffer)
     assert isinstance(stringBuffer, str)
     # MD5加密
-    #result=hashlib.md5(stringBuffer.encode())
     result = hashlib.md5(stringBuffer.encode(encoding='utf-8')).hexdigest()
     # 加入mac字段的值
     submit.mac = result
@@ -49,7 +48,6 @@ def Post():
     #print(response.content)
 
 if __name__ == '__main__':
- for i in range(1,10001):
     Post()
 
 
