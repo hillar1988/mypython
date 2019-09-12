@@ -6,7 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 import pandas as pd
 from Post import Post
@@ -15,28 +15,21 @@ from Post import Post
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(534, 355)
+        Form.resize(400, 300)
         self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(170, 120, 181, 111))
-        self.pushButton.setMinimumSize(QtCore.QSize(181, 0))
-        self.pushButton.setMaximumSize(QtCore.QSize(181, 16777215))
-        font = QtGui.QFont()
-        font.setFamily("Adobe 仿宋 Std R")
-        font.setPointSize(14)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(9)
-        self.pushButton.setFont(font)
-        self.pushButton.setStyleSheet("color: rgb(170, 0, 0);\n"
-                                      "font: 75 14pt \"Adobe 仿宋 Std R\";")
+        self.pushButton.setGeometry(QtCore.QRect(160, 70, 75, 23))
         self.pushButton.setObjectName("pushButton")
+        self.textEdit = QtWidgets.QTextEdit(Form)
+        self.textEdit.setGeometry(QtCore.QRect(150, 130, 104, 71))
+        self.textEdit.setObjectName("textEdit")
 
         self.retranslateUi(Form)
+        # self.pushButton.clicked.connect(self.textEdit.clear)
         self.pushButton.clicked.connect(self.postinfo)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def showDialog(self):
-        # fname = QFileDialog.getOpenFileName(None, "选取文件", '/', "All Files (*);;Excel 文件(*.xls;*.xlsx)")
+        #fname = QFileDialog.getOpenFileName(None, "选取文件", '/', "All Files (*);;Excel 文件(*.xls;*.xlsx)")
         fileName_choose, filetype = QFileDialog.getOpenFileName(
             None, "选取文件", '/', "Excel 文件(*.xls;*.xlsx)")
 
@@ -49,7 +42,7 @@ class Ui_Form(object):
         if fileName_choose != "":
             return fileName_choose  # 返回选择文件路径
 
-    # 第一个参数必须是self，用于检查电话号码
+# 第一个参数必须是self，用于检查电话号码
     def check(self, s):
         if len(str(s)) != 11:
             return False
@@ -76,12 +69,12 @@ class Ui_Form(object):
             info = []
             result = []
             ls = pd.DataFrame(pd.read_excel(excel, header=None))
-            # 根据电话号码去掉重复行，保留重复行第一行的数据
-            lsls = ls.drop_duplicates([0])
-            # 比较去重前后的行数，如果相等表示没有重复
-            number = ls.shape[0] - lsls.shape[0]
-            if number > 0:
-                reply = QMessageBox.warning(
+            #根据电话号码去掉重复行，保留重复行第一行的数据
+            lsls=ls.drop_duplicates([0])
+            #比较去重前后的行数，如果相等表示没有重复
+            number=ls.shape[0]-lsls.shape[0]
+            if number>0:
+                reply=QMessageBox.warning(
                     None, "警告框", "有%d行电话号码重复！yes：去重发送；no：重新选择" % number, QMessageBox.Yes | QMessageBox.No)
                 if reply == QMessageBox.Ok:
                     '''ls.shape[0]:取行数；ls[0][i]：第一列的数据'''
@@ -98,11 +91,10 @@ class Ui_Form(object):
                     result.append(phone)
                     result.append(info[0])
                     return result  # 返回结果列表
-                else:
-                    return None
-            ###################################################################
-            if number == 0:
-                reply = QMessageBox.information(
+                else: return None
+            #######################################################################
+            if number==0:
+                reply=QMessageBox.information(
                     None, "消息框", "总共有%d行信息！请点击yes发送" % ls.shape[0], QMessageBox.Yes | QMessageBox.No)
                 if reply == QMessageBox.Ok:
                     '''ls.shape[0]:取行数；ls[0][i]：第一列的数据'''
@@ -119,8 +111,7 @@ class Ui_Form(object):
                     result.append(phone)
                     result.append(info[0])
                     return result  # 返回结果列表
-                else:
-                    return None
+                else: return None
 
     def postinfo(self):
         listinfo = self.read_excel()
@@ -141,17 +132,12 @@ class Ui_Form(object):
                 print("发送失败")
                 QMessageBox.warning(None,
                                     "处理结果",
-                                    "发送完毕，发送失败", )
+                                    "发送完毕，发送失败",)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.pushButton.setText(_translate("Form", "PushButton"))
-
-    def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.pushButton.setText(_translate("Form", "选择文件发送短信"))
 
 
 if __name__ == "__main__":

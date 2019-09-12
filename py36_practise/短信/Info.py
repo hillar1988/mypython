@@ -1,3 +1,8 @@
+import hashlib
+import json
+import base64
+import requests
+
 class Submit(object):
     # def __init__(self,apId,ecName,mobiles,content,sign,addSerial,mac):
     #     self.__apId=apId
@@ -71,6 +76,7 @@ class Submit(object):
     # @secretKey.setter
     # def secretKey(self, value):
     #     self.__secretKey = value
+
 
 
 
