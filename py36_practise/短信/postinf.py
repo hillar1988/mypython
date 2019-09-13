@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'postinfo.ui'
+# Form implementation generated from reading ui file 'postinf.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QMovie
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 import pandas as pd
 from Post import Post
+import re
 
 
 class Ui_Form(object):
@@ -17,7 +19,7 @@ class Ui_Form(object):
         Form.setObjectName("Form")
         Form.resize(534, 355)
         self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(170, 120, 181, 111))
+        self.pushButton.setGeometry(QtCore.QRect(240, 100, 181, 111))
         self.pushButton.setMinimumSize(QtCore.QSize(181, 0))
         self.pushButton.setMaximumSize(QtCore.QSize(181, 16777215))
         font = QtGui.QFont()
@@ -30,38 +32,39 @@ class Ui_Form(object):
         self.pushButton.setStyleSheet("color: rgb(170, 0, 0);\n"
                                       "font: 75 14pt \"Adobe 仿宋 Std R\";")
         self.pushButton.setObjectName("pushButton")
+        self.label = QtWidgets.QLabel(Form)
+        self.label.setGeometry(QtCore.QRect(0, 0, 171, 211))
+        self.label.setText("")
+        # self.label.setPixmap(QtGui.QPixmap("dongtu.gif"))
+        self.label.setObjectName("label")
+
+        self.gif = QMovie('dongtu.gif')
+        self.label.setMovie(self.gif)
+        self.gif.start()
+
+        self.label_2 = QtWidgets.QLabel(Form)
+        self.label_2.setGeometry(QtCore.QRect(190, 40, 291, 51))
+        self.label_2.setTextFormat(QtCore.Qt.RichText)
+        self.label_2.setObjectName("label_2")
 
         self.retranslateUi(Form)
         self.pushButton.clicked.connect(self.postinfo)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def showDialog(self):
-        # fname = QFileDialog.getOpenFileName(None, "选取文件", '/', "All Files (*);;Excel 文件(*.xls;*.xlsx)")
         fileName_choose, filetype = QFileDialog.getOpenFileName(
             None, "选取文件", '/', "Excel 文件(*.xls;*.xlsx)")
 
         if fileName_choose == "":
             print("\n取消选择")
             return
-        # print("\n你选择的文件为:")
-        # print(fileName_choose)
-        # print("文件筛选器类型: ", filetype)
+
         if fileName_choose != "":
             return fileName_choose  # 返回选择文件路径
 
     # 第一个参数必须是self，用于检查电话号码
     def check(self, s):
-        if len(str(s)) != 11:
-            return False
-        elif len(str(s)) == 11 and str(s).strip().startswith('11') is True:
-            return False
-        elif len(str(s)) == 11 and str(s).strip().startswith('12') is True:
-            return False
-        elif len(str(s)) == 11 and str(s).strip().startswith('14') is True:
-            return False
-        elif len(str(s)) == 11 and str(s).strip().startswith('16') is True:
-            return False
-        elif len(str(s)) == 11 and str(s).strip().startswith('19') is True:
+        if not re.match(r'^[1][3578]\d{9}$', s):
             return False
         else:
             return True
@@ -76,6 +79,10 @@ class Ui_Form(object):
             info = []
             result = []
             ls = pd.DataFrame(pd.read_excel(excel, header=None))
+            if ls.shape[0]==0:
+                QMessageBox.warning(
+                    None, "处理结果", "这是空的,没有发现需要发送的信息" , )
+                return None
             # 根据电话号码去掉重复行，保留重复行第一行的数据
             lsls = ls.drop_duplicates([0])
             # 比较去重前后的行数，如果相等表示没有重复
@@ -83,7 +90,7 @@ class Ui_Form(object):
             if number > 0:
                 reply = QMessageBox.warning(
                     None, "警告框", "有%d行电话号码重复！yes：去重发送；no：重新选择" % number, QMessageBox.Yes | QMessageBox.No)
-                if reply == QMessageBox.Ok:
+                if reply == QMessageBox.Yes:
                     '''ls.shape[0]:取行数；ls[0][i]：第一列的数据'''
                     for i in range(0, ls.shape[0]):
                         print(ls[0][i])
@@ -104,10 +111,10 @@ class Ui_Form(object):
             if number == 0:
                 reply = QMessageBox.information(
                     None, "消息框", "总共有%d行信息！请点击yes发送" % ls.shape[0], QMessageBox.Yes | QMessageBox.No)
-                if reply == QMessageBox.Ok:
+                if reply == QMessageBox.Yes:
                     '''ls.shape[0]:取行数；ls[0][i]：第一列的数据'''
                     for i in range(0, ls.shape[0]):
-                        print(ls[0][i])
+                        #print(ls[0][i])
                         if self.check(ls[0][i]) is True:
                             phone.append(str(ls[0][i]))  # 需转化为字符串
                             info.append(ls[1][i])  # 第二列的数据
@@ -146,12 +153,15 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.pushButton.setText(_translate("Form", "PushButton"))
-
-    def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
         self.pushButton.setText(_translate("Form", "选择文件发送短信"))
+        self.label_2.setToolTip(
+            _translate(
+                "Form",
+                "<html><head/><body><p><br/></p></body></html>"))
+        self.label_2.setText(
+            _translate(
+                "Form",
+                "<html><head/><body><p align=\"center\"><span style=\" font-size:17pt; font-weight:600; color:#00aaff; vertical-align:super;\">短信发送小工具(1.0版本:内容必须相同)</span></p></body></html>"))
 
 
 if __name__ == "__main__":
